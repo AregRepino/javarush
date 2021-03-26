@@ -10,12 +10,10 @@ import java.util.Map;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
-        //add your code here
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        // 1 Считать с консоли URL-ссылку.
+
         String URL = reader.readLine();
 
-        // разделяем ссылку на знак ?
         int indexOfQuestionMark = URL.indexOf("?");
 
 
@@ -23,7 +21,6 @@ public class Solution {
 
         String[] pairs = s.split("&");
 
-// создали списал
         List<String> keys = new ArrayList<>();
         Map<String, String> map = new HashMap<>();
 
