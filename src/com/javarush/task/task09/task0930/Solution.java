@@ -8,12 +8,10 @@ public class Solution {
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<String> list = new ArrayList<>();
-        while (true) {
-            String s = reader.readLine();
-            if (s.isEmpty()) {
-                break;
-            }
-            list.add(s);
+        String line = reader.readLine();
+        while (!line.isEmpty()) {
+            list.add(line);
+            line = reader.readLine();
         }
 
         String[] array = list.toArray(new String[0]);
@@ -25,50 +23,26 @@ public class Solution {
     }
 
     public static void sort(String[] array) {
-        String variable = null;
-        for (int j = 0; j < array.length; j ++) {
-            for (int i = 0; i < array.length - 1 - j; i++) {
-                if (isGreaterThan(array[i], array[i + 1])) {
-                    variable = array[i];
-                    array[i] = array[i + 1];
-                    array[i + 1] = variable;
-                }
-            }
-        }
-
-    }
-
-
-    public static void sortString(String[] array) {
         // напишите тут ваш код
-        String variable = null;
-        for (int j = 0; j < array.length; j ++) {
-            for (int i = 0; i < array.length - 1 - j; i++) {
-                if (isGreaterThan(array[i], array[i + 1])) {
-                    variable = array[i];
-                    array[i] = array[i + 1];
-                    array[i + 1] = variable;
+        for (int i = 0; i < array.length; i++) {
+            for (int j = i + 1; j < array.length; j++) {
+                if (isNumber(array[i]) && isNumber(array[j])) {
+                    if (Integer.parseInt(array[i]) < Integer.parseInt(array[j])) {
+                        String temp = array[i];
+                        array[i] = array[j];
+                        array[j] = temp;
+                    }
+                } else if (!isNumber(array[i]) && !isNumber(array[j])) {
+                    if (isGreaterThan(array[i], array[j])) {
+                        String temp = array[i];
+                        array[i] = array[j];
+                        array[j] = temp;
+                    }
                 }
             }
         }
 
 
-
-    }
-
-    public static void sort(int[] array) {
-        int variable = 0;
-        for (int i = 0; i <  array.length; i ++) {
-            for (int j = 0; j < array.length -1 - i; j ++ ) {
-                if (array[j] < array[j + 1]) {
-                    variable = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = variable;
-
-                }
-
-            }
-        }
     }
 
     // Метод для сравнения строк: 'а' больше чем 'b'
@@ -78,21 +52,31 @@ public class Solution {
 
 
     // Переданная строка - это число?
-    public static boolean isNumber(String s) {
-        if (s.length() == 0) {
+    public static boolean isNumber(String text) {
+        if (text.length() == 0) {
             return false;
         }
 
-        char[] chars = s.toCharArray();
+        char[] chars = text.toCharArray();
         for (int i = 0; i < chars.length; i++) {
-            char c = chars[i];
-            if ((i != 0 && c == '-') // Строка содержит '-'
-                    || (!Character.isDigit(c) && c != '-') // или не цифра и не начинается с '-'
-                    || (chars.length == 1 && c == '-')) // или одиночный '-'
-            {
+            char character = chars[i];
+
+            // есть '-' внутри строки
+            if (i != 0 && character == '-') {
+                return false;
+            }
+
+            // не цифра и не начинается с '-'
+            if (!Character.isDigit(character) && character != '-') {
+                return false;
+            }
+
+            // одиночный '-'
+            if (chars.length == 1 && character == '-') {
                 return false;
             }
         }
+
         return true;
     }
 }
